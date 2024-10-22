@@ -2,12 +2,23 @@ const express = require('express') ; // importing from node_modules
 const app =express();// using express instance to create server .. 
 
 
-app.get("/user",(req,res)=>{
+app.get("/user",(req,res,next)=>{
+    
+    // res.send({
+    //     firstName:"Narendra",
+    //     lastName : " jinka"
+    // });
+    console.log("get req123");
+    
+},(req,res)=>{
+    
     res.send({
         firstName:"Narendra",
         lastName : " jinka"
     });
-});
+    console.log("get req123");
+    
+},);
 app.post("/user",(req,res)=>{
     res.send("Data Posted successfully ");
 });
