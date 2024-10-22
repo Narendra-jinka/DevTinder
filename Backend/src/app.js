@@ -22,5 +22,5 @@ app.use("/",(err,req,res,next)=>{
 
 
 app.listen(3344,()=>{
-    console.log("app listening at 3000 port ..") 
+    console.log("app listening at 3344 port ..") 
 });
