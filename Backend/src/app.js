@@ -1,16 +1,8 @@
 const express = require('express') ; // importing from node_modules
 const app =express();// using express instance to create server .. 
+const {adminAuth} = require("./Middlewares/Auth")
 
-
-app.get("/user",(req,res,next)=>{
-    
-    // res.send({
-    //     firstName:"Narendra",
-    //     lastName : " jinka"
-    // });
-    console.log("get req123");
-    
-},(req,res)=>{
+app.get("/user",adminAuth,(req,res,next)=>{
     
     res.send({
         firstName:"Narendra",
@@ -18,7 +10,7 @@ app.get("/user",(req,res,next)=>{
     });
     console.log("get req123");
     
-},);
+});
 app.post("/user",(req,res)=>{
     res.send("Data Posted successfully ");
 });
