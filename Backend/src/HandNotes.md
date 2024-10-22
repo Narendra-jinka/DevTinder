@@ -31,7 +31,7 @@ app.listen(3344,()=>{
 
 
  
-<!-- app.use("/",(err,req,res,next)=>{
+ app.use("/",(err,req,res,next)=>{
     if(err){
         res.status(500).send("something went wrong..!");
     }
