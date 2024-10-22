@@ -1,26 +1,31 @@
-const express = require('express') ; // importing from node_modules
-const app =express();// using express instance to create server .. 
-const {adminAuth} = require("./Middlewares/Auth")
+const express = require('express') ; 
+const connectdb = require('./config/database');
+const app =express();
+const User = require('./models/user');
 
-app.get("/user",adminAuth,(req,res,next)=>{
-    
-    res.send({
-        firstName:"Narendra",
-        lastName : " jinka"
+app.post("/signup", async (req,res)=>{
+    const user = new User({
+        firstName: "Narendra",
+        lastName :"Jinka",
+        email : "narendrajinka44@gmail.com",
+        password:"Nare@123",
+        age : 24,
+        gender : "male"
     });
-    
-    console.log("get req123");
-    
-});
-
- 
-app.use("/",(err,req,res,next)=>{
-    if(err){
-        res.status(500).send("something went wrong..!");
+    try{
+        await user.save();
+        res.send("Data added successfully!!"); 
+    }catch(err){
+        res.status(400).send("error is occured :", err.message);
     }
-});
+})
 
 
-app.listen(3344,()=>{
-    console.log("app listening at 3344 port ..") 
+connectdb().then(()=>{
+    console.log("database connected sucessfully");
+    app.listen(3344,()=>{
+        console.log("app listening at 3344 port ..") 
+    });
+}).catch(err=>{
+    console.log("database connection failed ",err);
 });
