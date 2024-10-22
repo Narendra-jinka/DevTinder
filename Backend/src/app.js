@@ -8,20 +8,16 @@ app.get("/user",adminAuth,(req,res,next)=>{
         firstName:"Narendra",
         lastName : " jinka"
     });
+    
     console.log("get req123");
     
 });
-app.post("/user",(req,res)=>{
-    res.send("Data Posted successfully ");
-});
 
-app.delete("/user" , (req,res)=>{
-    res.send("Data deleted successfully ")
-})
-
-app.use("/test",(req,res)=>{
-    res.send("hello this is server/test responding..");
-    
+ 
+app.use("/",(err,req,res,next)=>{
+    if(err){
+        res.status(500).send("something went wrong..!");
+    }
 });
 
 
