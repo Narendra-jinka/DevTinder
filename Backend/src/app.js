@@ -16,6 +16,7 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+// get a single user .  are list of user who are matched .
 app.get("/users", async (req, res) => {
     const userEmail = req.body.email;
     console.log(userEmail);
@@ -31,6 +32,7 @@ app.get("/users", async (req, res) => {
   }
 });
 
+//get all users 
 app.get("/feed", async (req,res)=>{
     try{
         const users = await User.find({});
@@ -39,6 +41,30 @@ app.get("/feed", async (req,res)=>{
         res.status(400).send("some thing went wrong");
       }
 })
+
+app.delete("/user",async (req,res)=>{
+    const mail =req.body.email ; 
+
+    try{
+        const user = await User.findOneAndDelete({email:mail});
+        res.send("user deleted successfully");
+
+    }catch (err) {
+        res.status(400).send("some thing went wrong");
+      }
+})
+
+app.patch("/user", async (req,res)=>{
+    const mail = req.body.email;
+    const body = req.body;
+    try{
+        const user = await User.findOneAndUpdate({email:mail},body);
+        res.send("user updated successfully ");
+    }
+    catch (err) {
+        res.status(400).send("some thing went wrong");
+      }
+});
 
 connectdb()
   .then(() => {
