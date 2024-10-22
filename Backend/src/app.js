@@ -3,15 +3,12 @@ const connectdb = require('./config/database');
 const app =express();
 const User = require('./models/user');
 
+//middle ware to change the js objs to javascript objs
+
+app.use(express.json()); // handles all the requests .. 
+
 app.post("/signup", async (req,res)=>{
-    const user = new User({
-        firstName: "Narendra",
-        lastName :"Jinka",
-        email : "narendrajinka44@gmail.com",
-        password:"Nare@123",
-        age : 24,
-        gender : "male"
-    });
+    const user = new User(req.body);
     try{
         await user.save();
         res.send("Data added successfully!!"); 
