@@ -1,4 +1,4 @@
-<!-- const express = require('express') ; // importing from node_modules
+const express = require('express') ; // importing from node_modules
 const app =express();// using express instance to create server .. 
 const {adminAuth} = require("./Middlewares/Auth")
 
@@ -41,6 +41,6 @@ here in the above handler , no of args are matters .
 
 2 args -> 1) req , 2) res ;
 3 args -> 1) req , 2) res , 3) next();
-4 args -> 1) err , 2) req , 3) res , 4) next() ; -->
+4 args -> 1) err , 2) req , 3) res , 4) next() ;
 
 but better to use try-catch
