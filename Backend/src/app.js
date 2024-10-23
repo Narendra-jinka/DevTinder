@@ -12,7 +12,7 @@ app.post("/signup", async (req, res) => {
     await user.save();
     res.send("Data added successfully!!");
   } catch (err) {
-    res.status(400).send("error is occured :", err.message);
+    res.status(400).send("error is occured :"+ err.message);
   }
 });
 
@@ -58,11 +58,13 @@ app.patch("/user", async (req,res)=>{
     const mail = req.body.email;
     const body = req.body;
     try{
-        const user = await User.findOneAndUpdate({email:mail},body);
+        const user = await User.findOneAndUpdate({email:mail},body,{
+          runValidators: true
+        });
         res.send("user updated successfully ");
     }
     catch (err) {
-        res.status(400).send("some thing went wrong");
+        res.status(400).send("some thing went wrong "+err.message);
       }
 });
 
