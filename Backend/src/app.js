@@ -2,18 +2,58 @@ const express = require("express");
 const connectdb = require("./config/database");
 const app = express();
 const User = require("./models/user");
-
-//middle ware to change the js objs to javascript objs
+const bcrypt = require("bcrypt");
+const validator = require("validator");
+//middle ware to change the json objs to javascript objs
 app.use(express.json()); // handles all the requests ..
 
 app.post("/signup", async (req, res) => {
-  const user = new User(req.body);
+  
   try {
+
+    const {firstName,lastName,email,password} = req.body;
+    const hashedPassword = await bcrypt.hash(password,10);
+    console.log(hashedPassword);
+    const user = new User({
+        firstName,
+        lastName,
+        email,
+        password:hashedPassword,
+    });
     await user.save();
+
+
     res.send("Data added successfully!!");
   } catch (err) {
     res.status(400).send("error is occured :" + err.message);
   }
+});
+
+app.post("/login", async (req,res)=>{
+    try {
+      const {email,password} = req.body;
+      
+      if(!validator.isEmail(email)){
+          throw new Error("Invalid Email ...!");
+      }
+     // console.log("validation success");
+
+      const user =await User.findOne({email:email});
+      if(!user){
+        throw new Error("Invalid Credentials - email");
+      }
+      //console.log("data base user found.."+ user);
+      const isPassword =await bcrypt.compare(password , user.password);
+      //console.log(isPassword);
+      if(isPassword){
+        res.send("Login successfully");
+      }
+      else{
+        res.send("Invalid Credentials - password")
+      }  
+    } catch (err) {
+      res.status(400).send("Error :" + err.message);
+    }
 });
 
 // get a single user .  are list of user who are matched .
